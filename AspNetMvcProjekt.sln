@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMvcProjekt", "AspNetMvcProjekt\AspNetMvcProjekt.csproj", "{E58221DB-DD51-4D67-AD1F-37C405F0FB22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "AspNetMvcProjekt\Web.csproj", "{E58221DB-DD51-4D67-AD1F-37C405F0FB22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{AC26DF89-1505-40E4-A55B-CC6911A42517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{52D729B4-7A2F-46A5-9C0D-2A3702679581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{E58221DB-DD51-4D67-AD1F-37C405F0FB22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E58221DB-DD51-4D67-AD1F-37C405F0FB22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E58221DB-DD51-4D67-AD1F-37C405F0FB22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC26DF89-1505-40E4-A55B-CC6911A42517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC26DF89-1505-40E4-A55B-CC6911A42517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC26DF89-1505-40E4-A55B-CC6911A42517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC26DF89-1505-40E4-A55B-CC6911A42517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D729B4-7A2F-46A5-9C0D-2A3702679581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D729B4-7A2F-46A5-9C0D-2A3702679581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D729B4-7A2F-46A5-9C0D-2A3702679581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D729B4-7A2F-46A5-9C0D-2A3702679581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
