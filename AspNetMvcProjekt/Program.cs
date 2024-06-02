@@ -1,7 +1,17 @@
+using AspNetMvcProjekt.DAL;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<StoreDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("StoreDbContext"),
+        opt => opt.MigrationsAssembly("DAL")
+    )
+);
 
 var app = builder.Build();
 
