@@ -1,9 +1,8 @@
-﻿using AspNetMvcProjekt.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Model;
+namespace AspNetMvcProjekt.Model;
 
 [PrimaryKey(nameof(ItemId), nameof(OrderId))]
 public class OrderItem

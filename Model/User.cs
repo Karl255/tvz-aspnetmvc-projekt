@@ -1,7 +1,6 @@
-﻿using AspNetMvcProjekt.Model;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace Model;
+namespace AspNetMvcProjekt.Model;
 
 public class User : IdentityUser<int>
 {

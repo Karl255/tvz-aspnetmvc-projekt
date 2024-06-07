@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AspNetMvcProjekt.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Model;
 using Microsoft.AspNetCore.Identity;
 
 namespace AspNetMvcProjekt.DAL;
