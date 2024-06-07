@@ -1,0 +1,22 @@
+﻿using AspNetMvcProjekt.Model;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Model;
+
+[PrimaryKey(nameof(ItemId), nameof(OrderId))]
+public class OrderItem
+{
+    [Key]
+    [ForeignKey(nameof(Item))]
+    public int ItemId { get; set; }
+    public virtual Item Item { get; set; }
+
+    [Key]
+    [ForeignKey(nameof(Order))]
+    public int OrderId { get; set; }
+    public virtual Order Order { get; set; }
+
+    public int Amount { get; set; }
+}

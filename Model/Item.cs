@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,5 +18,5 @@ public class Item
     public int CategoryId { get; set; }
     public Category Category { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; }
+    public virtual ICollection<OrderItem> OrderItems { get; set; }
 }
