@@ -19,6 +19,15 @@ builder.Services
     .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<StoreDbContext>();
 
+builder.Services.Configure<IdentityOptions>(config =>
+{
+    config.Password.RequiredUniqueChars = 0;
+    config.Password.RequireNonAlphanumeric = false;
+    config.Password.RequireLowercase = false;
+    config.Password.RequireUppercase = false;
+    config.Password.RequireDigit = false;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

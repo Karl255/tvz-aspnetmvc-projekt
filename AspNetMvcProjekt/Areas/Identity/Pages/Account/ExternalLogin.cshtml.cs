@@ -80,6 +80,9 @@ namespace Web.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            public string Name { get; set; }
+            public string Surname { get; set; }
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -148,6 +151,8 @@ namespace Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.Name = Input.Name;
+                user.Surname = Input.Surname;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
