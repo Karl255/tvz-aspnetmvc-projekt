@@ -1,5 +1,6 @@
 using AspNetMvcProjekt.DAL;
 using Microsoft.EntityFrameworkCore;
+using Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ builder.Services.AddDbContext<StoreDbContext>(options =>
         opt => opt.MigrationsAssembly("DAL")
     )
 );
+
+builder.Services
+    .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<StoreDbContext>();
 
 var app = builder.Build();
 
@@ -28,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
