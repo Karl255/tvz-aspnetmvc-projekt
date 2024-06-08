@@ -9,32 +9,32 @@ using Microsoft.EntityFrameworkCore;
 namespace Web.Controllers;
 
 public class ItemManagementController(
-    UserManager<User> userManager,
-    StoreDbContext dbContext
+	UserManager<User> userManager,
+	StoreDbContext dbContext
 ) : BaseController(userManager)
 {
-    [Authorize]
-    public IActionResult Index()
-    {
-        return View(GetItems().ToList());
-    }
+	[Authorize]
+	public IActionResult Index()
+	{
+		return View(GetItems().ToList());
+	}
 
-    [Authorize]
-    public IActionResult Create()
-    {
-        FillAvailableCategories();
-        return View();
-    }
+	[Authorize]
+	public IActionResult Create()
+	{
+		FillAvailableCategories();
+		return View();
+	}
 
-    [Authorize]
-    [HttpPost]
-    public IActionResult Create(Item item)
+	[Authorize]
+	[HttpPost]
+	public IActionResult Create(Item item)
 	{
 		if (!ModelState.IsValid)
 		{
-            var errors = string.Join(",\n", ModelState.Values.SelectMany(value => value.Errors.Select(error => error.ErrorMessage)));
-            Console.WriteLine(errors);
-            return RedirectToAction(nameof(Create));
+			var errors = string.Join(",\n", ModelState.Values.SelectMany(value => value.Errors.Select(error => error.ErrorMessage)));
+			Console.WriteLine(errors);
+			return RedirectToAction(nameof(Create));
 		}
 
 		dbContext.Add(item);
@@ -43,25 +43,54 @@ public class ItemManagementController(
 	}
 
 	[Authorize]
-    public IActionResult Edit(int id)
-    {
-        Console.WriteLine($"Action: Edit id = {id}");
-        FillAvailableCategories();
-        return RedirectToAction(nameof(Index));
-    }
+	public IActionResult Edit(int id)
+	{
+		var item = dbContext.Items.FirstOrDefault(x => x.Id == id);
 
-    [Authorize]
-    public IActionResult Delete(int id)
-    {
-        Console.WriteLine($"Action: Delete id = {id}");
-        return RedirectToAction(nameof(Index));
-    }
+		if (item is null)
+		{
+			return NotFound();
+		}
 
-    private IQueryable<Item> GetItems() => dbContext.Items.Include(i => i.Category);
+		FillAvailableCategories();
+		return View(item);
+	}
 
-    private void FillAvailableCategories()
-    {
-        var categoryOptions = dbContext.Categories.Select(category => new SelectListItem(category.Name, category.Id.ToString())).ToList();
-        ViewBag.CategoryOptions = categoryOptions;
-    }
+	[Authorize]
+	[ActionName("Edit")]
+	[HttpPost]
+	public async Task<IActionResult> EditPost(int id)
+	{
+		var item = dbContext.Items.FirstOrDefault(i => i.Id == id);
+
+		if (item is null)
+		{
+			return NotFound();
+		}
+
+		var hasSucceded = await TryUpdateModelAsync(item);
+
+		if (hasSucceded && ModelState.IsValid)
+		{
+			dbContext.SaveChanges();
+			return RedirectToAction(nameof(Index));
+		}
+
+		return RedirectToAction(nameof(Edit));
+	}
+
+	[Authorize]
+	public IActionResult Delete(int id)
+	{
+		Console.WriteLine($"Action: Delete id = {id}");
+		return RedirectToAction(nameof(Index));
+	}
+
+	private IQueryable<Item> GetItems() => dbContext.Items.Include(i => i.Category);
+
+	private void FillAvailableCategories()
+	{
+		var categoryOptions = dbContext.Categories.Select(category => new SelectListItem(category.Name, category.Id.ToString())).ToList();
+		ViewBag.CategoryOptions = categoryOptions;
+	}
 }

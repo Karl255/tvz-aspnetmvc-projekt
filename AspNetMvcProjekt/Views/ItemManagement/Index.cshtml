@@ -32,6 +32,7 @@
 					<td>@item.Description</td>
 					<td>@item.AmountInStorage</td>
 					<td>@item.Category?.Name</td>
+					<td>@item.Price.ToString("0.00") €</td>
 					<td>
 						<a asp-action="Edit" asp-route-id="@item.Id">[edit]</a>
 						<a asp-action="Delete" asp-route-id="@item.Id">[delete]</a>
