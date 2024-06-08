@@ -1,1 +1,5 @@
-﻿<h1>@ViewBag.CategoryName</h1>
+﻿@model List<Item>
+
+<h1>@ViewBag.CategoryName</h1>
+
+<partial name="_ItemsList" model="@Model" />
