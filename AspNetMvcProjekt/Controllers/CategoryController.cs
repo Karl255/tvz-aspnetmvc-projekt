@@ -14,7 +14,6 @@ public class CategoryController(
     [Route("/")]
     public IActionResult All()
     {
-        Console.WriteLine("4");
         return View(GetItems().ToList());
     }
 

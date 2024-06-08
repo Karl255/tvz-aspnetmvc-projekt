@@ -58,11 +58,10 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "item management",
-    pattern: "manage/items/{id?}",
+    pattern: "manage/items/{action=Index}/{id?}",
     defaults: new
     {
         controller = "ItemManagement",
-        action = "Index",
     }
 );
 

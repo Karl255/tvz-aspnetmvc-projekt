@@ -10,12 +10,12 @@ public class OrderItem
     [Key]
     [ForeignKey(nameof(Item))]
     public int ItemId { get; set; }
-    public virtual Item Item { get; set; }
+    public virtual Item Item { get; set; } = null!;
 
     [Key]
     [ForeignKey(nameof(Order))]
     public int OrderId { get; set; }
-    public virtual Order Order { get; set; }
+    public virtual Order Order { get; set; } = null!;
 
     public int Amount { get; set; }
 }

@@ -13,9 +13,9 @@ public class Order
 
     [ForeignKey(nameof(User))]
     public int UserId { get; set; }
-    public virtual User User { get; set; }
+    public virtual User User { get; set; } = null!;
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; }
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }
 
 public enum OrderStatus

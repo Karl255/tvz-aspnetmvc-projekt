@@ -15,7 +15,7 @@ public class Item
 
     [ForeignKey(nameof(Category))]
     public int CategoryId { get; set; }
-    public Category Category { get; set; }
+    public virtual Category? Category { get; set; } = null!;
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; }
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }
