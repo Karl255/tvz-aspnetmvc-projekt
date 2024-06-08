@@ -11,7 +11,7 @@
                     <p class="card-text">Amount in Storage: @item.AmountInStorage</p>
                     @if (ViewBag.IsLoggedIn)
                     {
-                        <button class="btn btn-primary">Add to cart</button>
+                        <button class="btn btn-primary" onclick="addToCart(@item.Id)">Add to cart</button>
                     }
                 </div>
             </div>
