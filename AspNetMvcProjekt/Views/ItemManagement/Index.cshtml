@@ -34,11 +34,23 @@
 					<td>@item.Category?.Name</td>
 					<td>@item.Price.ToString("0.00") €</td>
 					<td>
-						<a asp-action="Edit" asp-route-id="@item.Id">[edit]</a>
-						<a asp-action="Delete" asp-route-id="@item.Id">[delete]</a>
+						<a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+						<button class="btn btn-danger" onclick="deleteItem(@item.Id)">Delete</button>
 					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
+
+@section scripts {
+	<script defer async>
+		async function deleteItem(id) {
+			await fetch(
+				"@Url.Action("Delete", new { id = -1})".replace("-1", id.toString()),
+				{ method: "DELETE" },
+			);
+			location.reload();
+		}
+	</script>
+}

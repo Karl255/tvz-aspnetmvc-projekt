@@ -80,11 +80,20 @@ public class ItemManagementController(
 	}
 
 	[Authorize]
+	[HttpDelete]
 	public IActionResult Delete(int id)
 	{
-		Console.WriteLine($"Action: Delete id = {id}");
-		return RedirectToAction(nameof(Index));
-	}
+        var itemToDelete = dbContext.Items.FirstOrDefault(c => c.Id == id);
+
+        if (itemToDelete is null)
+        {
+            return NotFound();
+        }
+
+        dbContext.Items.Remove(itemToDelete);
+        dbContext.SaveChanges();
+        return NoContent();
+    }
 
 	private IQueryable<Item> GetItems() => dbContext.Items.Include(i => i.Category);
 
