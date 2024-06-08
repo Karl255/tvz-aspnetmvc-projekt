@@ -20,7 +20,8 @@ public class CategoryController(
     public IActionResult Category(string name)
     {
         ViewBag.CategoryName = name;
-        return View(GetItems().ToList());
+        var items = GetItems().ToList().Where(i => i.Category?.Name == name).ToList();
+        return View(items);
     }
 
     private IQueryable<Item> GetItems() => dbContext.Items.Include(i => i.Category);
