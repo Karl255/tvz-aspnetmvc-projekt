@@ -14,4 +14,15 @@ public class StoreDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     protected StoreDbContext() { }
 
     public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) { }
+
+	protected override void OnModelCreating(ModelBuilder builder)
+	{
+		base.OnModelCreating(builder);
+
+        builder.Entity<Category>().HasData(
+            new Category { Id = 1, Name = "Passive" },
+            new Category { Id = 2, Name = "Active" },
+            new Category { Id = 3, Name = "IC" }
+        );
+	}
 }
