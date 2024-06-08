@@ -9,7 +9,10 @@
                     <h5 class="card-title">@item.Name</h5>
                     <p class="card-text">Price: @item.Price</p>
                     <p class="card-text">Amount in Storage: @item.AmountInStorage</p>
-                    <button class="btn btn-primary">Add to cart</button>
+                    @if (ViewBag.IsLoggedIn)
+                    {
+                        <button class="btn btn-primary">Add to cart</button>
+                    }
                 </div>
             </div>
         </div>

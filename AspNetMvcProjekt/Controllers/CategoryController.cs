@@ -1,13 +1,17 @@
 ﻿using AspNetMvcProjekt.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers;
 
-public class CategoryController : Controller
+public class CategoryController : BaseController
 {
+    public CategoryController(UserManager<User> userManager) : base(userManager) { }
+
     [Route("/")]
     public IActionResult All()
     {
+        Console.WriteLine("4");
         return View(GetMockItems());
     }
 
