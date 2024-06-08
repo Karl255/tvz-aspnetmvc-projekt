@@ -1,22 +1,25 @@
 using AspNetMvcProjekt.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace AspNetMvcProjekt.Web.Controllers;
 
+[Route("dev")]
 public class TestController : Controller
 {
-    [ActionName("Unauthorized")]
+    [Route("no-auth")]
     public IActionResult IndexUnauthorized()
     {
-        ViewBag.Message = "Unauthorized";
+        ViewBag.Message = "No auth required";
         return View("Index");
     }
 
-    [ActionName("Authorized")]
+    [Route("auth")]
+    [Authorize]
     public IActionResult IndexAuthorized()
     {
-        ViewBag.Message = "Authorized";
+        ViewBag.Message = "Auth required";
         return View("Index");
     }
 
