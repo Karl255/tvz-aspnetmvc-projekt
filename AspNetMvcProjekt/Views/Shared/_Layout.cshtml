@@ -1,4 +1,7 @@
 ﻿@using AspNetMvcProjekt.DAL
+
+@inject StoreDbContext DbContext
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,8 +23,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @inject StoreDbContext dbContext
-                        @foreach (var category in dbContext.Categories)
+                        @foreach (var category in DbContext.Categories)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ItemList" asp-action="Category" asp-route-name="@category.Name">@category.Name</a>

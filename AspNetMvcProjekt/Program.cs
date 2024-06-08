@@ -1,6 +1,7 @@
 using AspNetMvcProjekt.DAL;
 using AspNetMvcProjekt.Model;
 using AspNetMvcProjekt.Web.Controllers;
+using AspNetMvcProjekt.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +29,8 @@ builder.Services.Configure<IdentityOptions>(config =>
     config.Password.RequireUppercase = false;
     config.Password.RequireDigit = false;
 });
+
+builder.Services.AddScoped<CartService>();
 
 var app = builder.Build();
 

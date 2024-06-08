@@ -22,3 +22,17 @@ body {
 body > footer {
 	margin-top: auto;
 }
+
+.cart-link {
+	display: flex;
+	align-items: center;
+}
+
+.cart-link a {
+	color: inherit;
+}
+
+.cart-link svg {
+	display: inline-block;
+	vertical-align: middle;
+}
