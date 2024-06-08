@@ -56,6 +56,16 @@ app.MapControllerRoute(
     }
 );
 
+app.MapControllerRoute(
+    name: "item management",
+    pattern: "manage/items/{id?}",
+    defaults: new
+    {
+        controller = "ItemManagement",
+        action = "Index",
+    }
+);
+
 app.MapRazorPages();
 
 app.Run();
