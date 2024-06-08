@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Web.Controllers;
+namespace AspNetMvcProjekt.Web.Controllers;
 
-public class CategoryController(
+public class ItemListController(
     UserManager<User> userManager,
     StoreDbContext dbContext
 ) : BaseController(userManager)
 {
     [Route("/")]
-    public IActionResult All()
+    public IActionResult Index()
     {
         return View(GetItems().ToList());
     }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Web.Controllers;
+namespace AspNetMvcProjekt.Web.Controllers;
 
 public abstract class BaseController(UserManager<User> userManager) : Controller
 {

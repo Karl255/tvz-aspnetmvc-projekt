@@ -1,7 +1,8 @@
 using AspNetMvcProjekt.DAL;
-using Microsoft.EntityFrameworkCore;
 using AspNetMvcProjekt.Model;
+using AspNetMvcProjekt.Web.Controllers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,8 +52,8 @@ app.MapControllerRoute(
     pattern: "category/{name}",
     defaults: new
     {
-        controller = "Category",
-        action = "Category",
+        controller = nameof(ItemListController).Replace("Controller", ""),
+        action = nameof(ItemListController.Category),
     }
 );
 
@@ -61,7 +62,7 @@ app.MapControllerRoute(
     pattern: "manage/items/{action=Index}/{id?}",
     defaults: new
     {
-        controller = "ItemManagement",
+        controller = nameof(ItemManagementController).Replace("Controller", ""),
     }
 );
 

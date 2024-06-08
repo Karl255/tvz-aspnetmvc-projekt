@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Web.Controllers;
+namespace AspNetMvcProjekt.Web.Controllers;
 
 public class ItemManagementController(
 	UserManager<User> userManager,

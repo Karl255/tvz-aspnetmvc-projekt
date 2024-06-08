@@ -1,12 +1,14 @@
+using AspNetMvcProjekt.Model;
 using AspNetMvcProjekt.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace AspNetMvcProjekt.Web.Controllers;
 
 [Route("dev")]
-public class TestController : Controller
+public class TestController(UserManager<User> userManager) : BaseController(userManager)
 {
     [Route("no-auth")]
     public IActionResult IndexUnauthorized()
