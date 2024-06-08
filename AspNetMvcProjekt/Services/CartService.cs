@@ -11,17 +11,22 @@ public class CartService(
 	UserManager<User> userManager
 )
 {
-	public async Task<int> GetItemsInCart(ClaimsPrincipal user)
+	public async Task<List<OrderItem>> GetItems(ClaimsPrincipal user)
+	{
+		return (await GetOrderItems(user))
+			.Include(oi => oi.Item)
+			.ToList();
+	}
+
+	public async Task<int> GetItemsCount(ClaimsPrincipal user) => (await GetOrderItems(user)).Sum(oi => oi.Amount);
+
+	private async Task<IQueryable<OrderItem>> GetOrderItems(ClaimsPrincipal user)
 	{
 		var loggedInUser = await userManager.GetUserAsync(user);
 
-		var cart = dbContext.Orders.Include(o => o.OrderItems).FirstOrDefault(o => o.Status == OrderStatus.Cart);
+		var cart = dbContext.Orders
+			.FirstOrDefault(o => o.Status == OrderStatus.Cart);
 
-		if (cart == null)
-		{
-			return 0;
-		}
-
-		return cart.OrderItems.Sum(oi => oi.Amount);
+		return cart == null ? Enumerable.Empty<OrderItem>().AsQueryable() : dbContext.OrderItems.Where(oi => oi.OrderId == cart.Id);
 	}
 }
