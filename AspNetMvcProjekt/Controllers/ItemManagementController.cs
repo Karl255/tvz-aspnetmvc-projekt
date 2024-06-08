@@ -1,18 +1,21 @@
-﻿using AspNetMvcProjekt.Model;
+﻿using AspNetMvcProjekt.DAL;
+using AspNetMvcProjekt.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Controllers;
 
-public class ItemManagementController : BaseController
+public class ItemManagementController(
+    UserManager<User> userManager,
+    StoreDbContext dbContext
+) : BaseController(userManager)
 {
-    public ItemManagementController(UserManager<User> userManager) : base(userManager) { }
-
     [Authorize]
     public IActionResult Index()
     {
-        return View(new List<Item>());
+        return View(GetItems().ToList());
     }
 
     [Authorize]
@@ -28,4 +31,6 @@ public class ItemManagementController : BaseController
         Console.WriteLine($"Action: Delete id = {id}");
         return RedirectToAction(nameof(Index));
     }
+
+    private IQueryable<Item> GetItems() => dbContext.Items.Include(i => i.Category);
 }
