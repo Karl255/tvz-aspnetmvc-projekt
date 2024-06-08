@@ -1,5 +1,6 @@
 ﻿using AspNetMvcProjekt.DAL;
 using AspNetMvcProjekt.Model;
+using AspNetMvcProjekt.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -20,13 +21,46 @@ public class CartService(
 
 	public async Task<int> GetItemsCount(ClaimsPrincipal user) => (await GetOrderItems(user)).Sum(oi => oi.Amount);
 
+	public async Task<bool> PlaceOrder(ClaimsPrincipal user, PlaceOrderModel completeOrder)
+	{
+		var loggedInUser = await userManager.GetUserAsync(user);
+
+		if (loggedInUser == null)
+		{
+			return false;
+		}
+
+		var order = dbContext.Orders.FirstOrDefault(o => o.User == loggedInUser && o.Status == OrderStatus.Cart);
+
+		if (order == null)
+		{
+			return false;
+		}
+
+		order.Address = completeOrder.Address;
+		order.City = completeOrder.City;
+		order.ZipCode = completeOrder.ZipCode;
+		order.Status = OrderStatus.Ordered;
+
+		dbContext.SaveChanges();
+
+		return true;
+	}
+
 	private async Task<IQueryable<OrderItem>> GetOrderItems(ClaimsPrincipal user)
 	{
 		var loggedInUser = await userManager.GetUserAsync(user);
 
-		var cart = dbContext.Orders
-			.FirstOrDefault(o => o.Status == OrderStatus.Cart);
+		if (loggedInUser == null)
+		{
+			return Empty();
+		}
 
-		return cart == null ? Enumerable.Empty<OrderItem>().AsQueryable() : dbContext.OrderItems.Where(oi => oi.OrderId == cart.Id);
+		var cart = dbContext.Orders
+			.FirstOrDefault(o => o.UserId == loggedInUser.Id && o.Status == OrderStatus.Cart);
+
+		return cart == null ? Empty() : dbContext.OrderItems.Where(oi => oi.OrderId == cart.Id);
+
+		IQueryable<OrderItem> Empty() => Enumerable.Empty<OrderItem>().AsQueryable();
 	}
 }
