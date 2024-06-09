@@ -31,6 +31,8 @@
 					<td>@order.Status.ToString()</td>
 
 					<td>
+						<a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@order.Id">Details</a>
+
 						@if (order.Status == OrderStatus.Ordered)
 						{
 							<a class="btn btn-outline-success" asp-action="Ship" asp-route-id="@order.Id">Ship</a>

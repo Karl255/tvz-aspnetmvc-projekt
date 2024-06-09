@@ -1,0 +1,10 @@
+﻿@model List<OrderItem>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-action="Index">Orders</a></li>
+		<li class="breadcrumb-item active" aria-current="page">@ViewBag.OrderId</li>
+	</ol>
+</nav>
+
+<partial name="_CartItems" model="@Model" />

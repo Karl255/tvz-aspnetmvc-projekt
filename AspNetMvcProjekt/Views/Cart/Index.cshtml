@@ -8,55 +8,7 @@
 
 @if (Model.Count > 0)
 {
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">Name</th>
-					<th scope="col">Description</th>
-					<th scope="col">Amount</th>
-					<th scope="col">Price</th>
-					<th scope="col">Total Price</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				@foreach (OrderItem orderItem in Model)
-				{
-					<tr>
-						<td>@orderItem.Item.Name</td>
-						<td>@orderItem.Item.Description</td>
-
-						<td class="amount">
-							<button class="btn p-0" onclick="decreaseInCart(@orderItem.Item.Id, true)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-									<path fill="currentColor" d="M6 13q-.425 0-.712-.288T5 12q0-.425.288-.712T6 11h12q.425 0 .713.288T19 12q0 .425-.288.713T18 13z" />
-								</svg>
-							</button>
-
-							@orderItem.Amount
-
-							<button class="btn p-0" onclick="addToCart(@orderItem.Item.Id, true)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-									<path fill="currentColor" d="M11 13H6q-.425 0-.712-.288T5 12q0-.425.288-.712T6 11h5V6q0-.425.288-.712T12 5q.425 0 .713.288T13 6v5h5q.425 0 .713.288T19 12q0 .425-.288.713T18 13h-5v5q0 .425-.288.713T12 19q-.425 0-.712-.288T11 18z" />
-								</svg>
-							</button>
-						</td>
-
-						<td>@orderItem.Item.Price.ToString("0.00") €</td>
-						<td class="fw-bold">@((orderItem.Item.Price * orderItem.Amount).ToString("0.00")) €</td>
-					</tr>
-				}
-			</tbody>
-
-			<tfoot>
-				<tr>
-					<th colspan="4" class="text-end">Subtotal</th>
-					<th>@Model.Select(oi => oi.Amount * oi.Item.Price).Sum().ToString("0.00") €</th>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
+	<partial name="_CartItems" model="@Model" />
 
 	<div class="row">
 		<div class="col-md-4">
@@ -81,9 +33,9 @@ else
 			gap: 0.5rem;
 		}
 
-			.amount svg,
-			.amount button {
-				display: block;
-			}
+		.amount svg,
+		.amount button {
+			display: block;
+		}
 	</style>
 }

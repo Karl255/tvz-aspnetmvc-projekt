@@ -19,6 +19,14 @@ public class OrderManagementController(
 	}
 
 	[Route("{id}")]
+	public IActionResult Details(int id)
+	{
+		ViewBag.OrderId = id;
+		var orederItems = dbContext.OrderItems.Include(oi => oi.Item).Where(oi => oi.OrderId == id).ToList();
+		return View(orederItems);
+	}
+
+	[Route("{id}/ship")]
 	public IActionResult Ship(int id)
 	{
 		var order = dbContext.Orders.FirstOrDefault(o => o.Id == id && o.Status == OrderStatus.Ordered);
