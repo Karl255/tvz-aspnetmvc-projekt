@@ -30,9 +30,9 @@ public class CartService(
 			return false;
 		}
 
-		var order = dbContext.Orders.FirstOrDefault(o => o.User == loggedInUser && o.Status == OrderStatus.Cart);
+		var order = dbContext.Orders.Include(o => o.OrderItems).FirstOrDefault(o => o.User == loggedInUser && o.Status == OrderStatus.Cart);
 
-		if (order == null)
+		if (order == null || order.OrderItems.Count == 0)
 		{
 			return false;
 		}

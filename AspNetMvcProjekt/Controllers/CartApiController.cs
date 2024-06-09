@@ -17,7 +17,7 @@ public class CartApiController(StoreDbContext dbContext, UserManager<User> userM
 	public async Task<IActionResult> AddOne(CartItemRequest request)
 	{
 		var user = await GetUser();
-		var order = dbContext.Orders.FirstOrDefault(o => o.UserId == user.Id);
+		var order = dbContext.Orders.FirstOrDefault(o => o.UserId == user.Id && o.Status == OrderStatus.Cart);
 
 		if (order == null)
 		{
@@ -55,7 +55,7 @@ public class CartApiController(StoreDbContext dbContext, UserManager<User> userM
 	public async Task<IActionResult> RemoveOne(CartItemRequest request)
 	{
 		var user = await GetUser();
-		var order = dbContext.Orders.FirstOrDefault(o => o.UserId == user.Id);
+		var order = dbContext.Orders.FirstOrDefault(o => o.UserId == user.Id && o.Status == OrderStatus.Cart);
 
 		if (order == null)
 		{
