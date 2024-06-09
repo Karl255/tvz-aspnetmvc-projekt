@@ -7,3 +7,35 @@ curl --request GET \
 curl --request GET \
   --url https://localhost:7297/api/items/9 \
   --header 'User-Agent: insomnia/2023.5.8'
+
+# POST
+curl --request POST \
+  --url https://localhost:7297/api/items \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/2023.5.8' \
+  --data '{
+	"name": "Resistor 22k",
+	"description": "2k E6",
+	"amountInStorage": 99,
+	"price": 0.05,
+	"category": "Passive"
+}'
+
+# PUT
+curl --request PUT \
+  --url https://localhost:7297/api/items/16 \
+  --header 'Content-Type: application/json' \
+  --header 'User-Agent: insomnia/2023.5.8' \
+  --data '{
+	"id": 16,
+	"name": "Resistor 22k",
+	"description": "2k E12",
+	"amountInStorage": 99,
+	"price": 0.07,
+	"category": "Passive"
+}'
+
+# DELETE
+curl --request DELETE \
+  --url https://localhost:7297/api/items/16 \
+  --header 'User-Agent: insomnia/2023.5.8'

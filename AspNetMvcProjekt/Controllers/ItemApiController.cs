@@ -80,6 +80,23 @@ public class ItemApiController(StoreDbContext dbContext) : ControllerBase
 
 		return NoContent();
 	}
+
+	[HttpDelete]
+	[Route("{id}")]
+	public IActionResult Delete(int id)
+	{
+		var itemToDelete = dbContext.Items.FirstOrDefault(i => i.Id == id);
+
+		if (itemToDelete == null)
+		{
+			return NotFound();
+		}
+
+		dbContext.Items.Remove(itemToDelete);
+		dbContext.SaveChanges();
+
+		return NoContent();
+	}
 }
 
 public record ItemDto(
