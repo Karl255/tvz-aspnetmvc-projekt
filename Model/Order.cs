@@ -8,6 +8,7 @@ public class Order
     [Key] public int Id { get; set; }
     public string? City { get; set; }
     public string? Address { get; set; }
+    [RegularExpression(@"\d{5}")]
     public string? ZipCode {  get; set; }
     public OrderStatus Status { get; set; }
 
