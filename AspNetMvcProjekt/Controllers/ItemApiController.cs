@@ -9,12 +9,14 @@ namespace AspNetMvcProjekt.Web.Controllers;
 [Route("/api/items")]
 public class ItemApiController(StoreDbContext dbContext) : ControllerBase
 {
+	[HttpGet]
 	public IActionResult GetAll()
 	{
 		var items = dbContext.Items.Include(i => i.Category).Select(item => item.ToDto()).ToList();
 		return Ok(items);
 	}
 
+	[HttpGet]
 	[Route("{id}")]
 	public IActionResult GetOne(int id)
 	{
@@ -48,6 +50,35 @@ public class ItemApiController(StoreDbContext dbContext) : ControllerBase
 			Url.Action(nameof(GetOne), new { id = itemEntity.Id }),
 			itemEntity.ToDto()
 		);
+	}
+
+	[HttpPut]
+	[Route("{id}")]
+	public IActionResult Update(int id, [FromBody] ItemDto item)
+	{
+		var itemToUpdate = dbContext.Items.FirstOrDefault(i => i.Id == id);
+
+		if (itemToUpdate == null)
+		{
+			return NotFound();
+		}
+
+		var category = dbContext.Categories.FirstOrDefault(c => c.Name == item.Category);
+
+		if (category == null)
+		{
+			return BadRequest(new { Message = $"Category with name {item.Category} does not exist" });
+		}
+
+		itemToUpdate.Name = item.Name;
+		itemToUpdate.Description = item.Description;
+		itemToUpdate.AmountInStorage = item.AmountInStorage;
+		itemToUpdate.Price = item.Price;
+		itemToUpdate.CategoryId = category.Id;
+
+		dbContext.SaveChanges();
+
+		return NoContent();
 	}
 }
 
