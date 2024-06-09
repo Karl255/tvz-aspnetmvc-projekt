@@ -1,5 +1,6 @@
 ﻿using AspNetMvcProjekt.DAL;
 using AspNetMvcProjekt.Model;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,10 +21,38 @@ public class ItemApiController(StoreDbContext dbContext) : ControllerBase
 		var item = dbContext.Items.Include(i => i.Category).FirstOrDefault(item => item.Id == id)?.ToDto();
 		return item != null ? Ok(item) : NotFound();
 	}
+
+	[HttpPost]
+	public IActionResult Create([FromBody] ItemDto item)
+	{
+		var category = dbContext.Categories.FirstOrDefault(c => c.Name == item.Category);
+
+		if (category == null)
+		{
+			return BadRequest(new { Message = $"Category with name {item.Category} does not exist" });
+		}
+
+		var itemEntity = new Item
+		{
+			Name = item.Name,
+			Description = item.Description,
+			AmountInStorage = item.AmountInStorage,
+			Price = item.Price,
+			CategoryId = category.Id,
+		};
+
+		dbContext.Items.Add(itemEntity);
+		dbContext.SaveChanges();
+
+		return Created(
+			Url.Action(nameof(GetOne), new { id = itemEntity.Id }),
+			itemEntity.ToDto()
+		);
+	}
 }
 
 public record ItemDto(
-	int Id,
+	int? Id,
 	string Name,
 	string? Description,
 	int AmountInStorage,
@@ -33,12 +62,12 @@ public record ItemDto(
 
 internal static class Extensions
 {
-	internal static ItemDto ToDto(this Item item) => new(
-		item.Id,
-		item.Name,
-		item.Description,
-		item.AmountInStorage,
-		item.Price,
-		item.Category!.Name
+	internal static ItemDto ToDto(this Item entity) => new(
+		entity.Id,
+		entity.Name,
+		entity.Description,
+		entity.AmountInStorage,
+		entity.Price,
+		entity.Category!.Name
 	);
 }
