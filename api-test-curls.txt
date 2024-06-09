@@ -1,0 +1,9 @@
+# GET
+curl --request GET \
+  --url https://localhost:7297/api/items \
+  --header 'User-Agent: insomnia/2023.5.8'
+
+# GET id
+curl --request GET \
+  --url https://localhost:7297/api/items/9 \
+  --header 'User-Agent: insomnia/2023.5.8'
