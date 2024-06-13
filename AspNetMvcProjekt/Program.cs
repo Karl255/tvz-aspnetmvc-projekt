@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<StoreDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("StoreDbContext"),
+        builder.Configuration.GetConnectionString("ProductionDbConnection") ?? builder.Configuration.GetConnectionString("LocalDevelopmentDbConnection"),
         opt => opt.MigrationsAssembly("DAL")
     )
 );
