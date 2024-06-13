@@ -12,7 +12,6 @@ public abstract class BaseController(UserManager<User> userManager) : Controller
     public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         LoggedInUser = await userManager.GetUserAsync(User);
-        ViewBag.IsLoggedIn = LoggedInUser != null;
         await base.OnActionExecutionAsync(context, next);
     }
 }
