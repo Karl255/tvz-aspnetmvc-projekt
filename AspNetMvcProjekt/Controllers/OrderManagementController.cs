@@ -1,11 +1,13 @@
 ﻿using AspNetMvcProjekt.DAL;
 using AspNetMvcProjekt.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetMvcProjekt.Web.Controllers;
 
+[Authorize]
 [Route("manage/orders")]
 public class OrderManagementController(
 	UserManager<User> userManager,

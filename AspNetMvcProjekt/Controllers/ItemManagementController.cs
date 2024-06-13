@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetMvcProjekt.Web.Controllers;
 
+[Authorize]
 public class ItemManagementController(
 	UserManager<User> userManager,
 	StoreDbContext dbContext
 ) : BaseController(userManager)
 {
-	[Authorize]
 	public IActionResult Index()
 	{
 		return View(GetItems().ToList());
@@ -26,7 +26,6 @@ public class ItemManagementController(
 		return View();
 	}
 
-	[Authorize]
 	[HttpPost]
 	public IActionResult Create(Item item)
 	{
@@ -42,7 +41,6 @@ public class ItemManagementController(
 		return RedirectToAction(nameof(Index));
 	}
 
-	[Authorize]
 	public IActionResult Edit(int id)
 	{
 		var item = dbContext.Items.FirstOrDefault(x => x.Id == id);
@@ -56,7 +54,6 @@ public class ItemManagementController(
 		return View(item);
 	}
 
-	[Authorize]
 	[ActionName("Edit")]
 	[HttpPost]
 	public async Task<IActionResult> EditPost(int id)
@@ -79,7 +76,6 @@ public class ItemManagementController(
 		return RedirectToAction(nameof(Edit));
 	}
 
-	[Authorize]
 	[HttpDelete]
 	public IActionResult Delete(int id)
 	{
